@@ -58,17 +58,17 @@ class UpdateQuery implements
      *
      * @return void
      *
-     * @throws InvalidArgumentException When the value is not scalar.
+     * @throws InvalidArgumentException When the value is not scalar or null.
      */
     public function addColumn(string $column, $value): void
     {
-        if (is_scalar($value)) {
+        if (is_scalar($value) || is_null($value)) {
             $this->columns[$column] = $value;
             return;
         }
 
         throw new InvalidArgumentException(
-            'addColumn only accepts scalar values.'
+            'addColumn only accepts scalar and null values.'
         );
     }
 

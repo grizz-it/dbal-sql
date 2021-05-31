@@ -29,8 +29,9 @@ class UpdateQueryTest extends TestCase
         $subject = new UpdateQuery('foo');
 
         $subject->addColumn('bar', 'baz');
-        $this->assertEquals('UPDATE foo SET bar=?;', $subject->getQuery());
-        $this->assertEquals(['baz'], $subject->getParameters());
+        $subject->addColumn('qux', null);
+        $this->assertEquals('UPDATE foo SET bar=?, qux=?;', $subject->getQuery());
+        $this->assertEquals(['baz', null], $subject->getParameters());
 
         $this->expectException(InvalidArgumentException::class);
 

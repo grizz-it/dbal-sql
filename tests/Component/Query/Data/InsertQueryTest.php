@@ -30,13 +30,14 @@ class InsertQueryTest extends TestCase
         $this->assertInstanceOf(InsertQuery::class, $subject);
 
         $subject->addColumn('bar', 'baz');
+        $subject->addColumn('qux', null);
 
         $this->assertEquals(
-            'INSERT INTO foo (bar) VALUES (?);',
+            'INSERT INTO foo (bar, qux) VALUES (?, ?);',
             $subject->getQuery()
         );
 
-        $this->assertEquals(['baz'], $subject->getParameters());
+        $this->assertEquals(['baz', null], $subject->getParameters());
 
         $this->expectException(InvalidArgumentException::class);
         $subject->addColumn('bar', ['test']);
